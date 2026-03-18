@@ -1,5 +1,8 @@
+"use client";
+
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Button from "@/components/shared/button";
+import { useRouter } from "next/navigation";
 import {
     UsersIcon,
     CalendarDaysIcon,
@@ -7,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function DashboardPage() {
+    const router = useRouter();
     return (
         <DashboardLayout>
             {/* Page header */}
@@ -89,7 +93,7 @@ export default function DashboardPage() {
                         </p>
                     </div>
 
-                    <Button size="sm" className="flex items-center justify-center gap-2 w-full sm:w-fit my-4 sm:my-auto sm:px-8 sm:py-3.5">
+                    <Button size="sm" className="flex items-center justify-center gap-2 w-full sm:w-fit my-4 sm:my-auto sm:px-8 sm:py-3.5"  onClick={() => router.push('/dashboard/doctor')}>
                         <UserPlusIcon className="w-5 h-5" />
                         Add Staff
                     </Button>

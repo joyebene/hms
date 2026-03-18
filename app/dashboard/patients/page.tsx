@@ -2,6 +2,7 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Button from "@/components/shared/button";
+import Modal from "@/components/shared/modal";
 import { UserPlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
@@ -24,6 +25,7 @@ const dummyPatients: Patient[] = [
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Load dummy patients for now
@@ -46,7 +48,7 @@ export default function PatientsPage() {
         </div>
 
         <div className="flex-1 flex justify-end items-center w-full">
-          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5">
+          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5" onClick={() => setIsModalOpen(true)}>
             <UserPlusIcon className="w-5 h-5" />
             Add Patient
           </Button>
@@ -106,6 +108,61 @@ export default function PatientsPage() {
           </table>
         </div>
       </div>
+
+      {/* Add Patient Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Add New Patient"
+      >
+        <form>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="diagnosis" className="block text-sm font-medium text-gray-700">Diagnosis</label>
+              <input
+                type="text"
+                id="diagnosis"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="age" className="block text-sm font-medium text-gray-700">Age</label>
+              <input
+                type="number"
+                id="age"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
+              <select
+                id="gender"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div className="mt-6 flex justify-end space-x-3">
+            <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-gray-200 text-gray-700 hover:bg-gray-300">
+              Cancel
+            </Button>
+            <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-700">
+              Save Patient
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </DashboardLayout>
   );
 }

@@ -2,6 +2,7 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Button from "@/components/shared/button";
+import Modal from "@/components/shared/modal";
 import { CalendarDaysIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
@@ -66,6 +67,7 @@ const dummyAppointments: Appointment[] = [
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // For now, use dummy data
@@ -102,7 +104,7 @@ export default function AppointmentsPage() {
           <p className="text-sm sm:text-base text-gray-500 sm:mt-2">View and manage today&apos;s appointments.</p>
         </div>
         <div className="flex-1 flex justify-end items-center w-full mt-6">
-          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5">
+          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5" onClick={() => setIsModalOpen(true)}>
             <CalendarDaysIcon className="w-5 h-5" />
             Schedule Appointment
           </Button>
@@ -162,6 +164,70 @@ export default function AppointmentsPage() {
           </table>
         </div>
       </div>
+
+       <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Schedule New Appointment"
+      >
+        <form>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="patientName" className="block text-sm font-medium text-gray-700">Patient Name</label>
+              <input
+                type="text"
+                id="patientName"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="doctor" className="block text-sm font-medium text-gray-700">Doctor</label>
+              <select
+                id="doctor"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                {/* We can populate this from the doctors list later */}
+                <option>Dr. Smith</option>
+                <option>Dr. Jones</option>
+              </select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+                <input
+                  type="date"
+                  id="date"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label htmlFor="time" className="block text-sm font-medium text-gray-700">Time</label>
+                <input
+                  type="time"
+                  id="time"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="reason" className="block text-sm font-medium text-gray-700">Reason for Visit</label>
+              <textarea
+                id="reason"
+                rows={3}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              ></textarea>
+            </div>
+          </div>
+          <div className="mt-6 flex justify-end space-x-3">
+            <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-gray-200 text-gray-700 hover:bg-gray-300">
+              Cancel
+            </Button>
+            <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-700">
+              Save Appointment
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </DashboardLayout>
   );
 }

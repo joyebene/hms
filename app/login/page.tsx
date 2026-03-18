@@ -3,16 +3,30 @@
 import Button from "@/components/shared/button";
 import Input from "@/components/shared/input";
 import Select from "@/components/shared/select";
-import { useState } from "react";
-
-const roles = ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"];
-
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-
-  return (
+import { useRouter } from "next/navigation";
+ import { useState } from "react"; 
+  
+ const roles = ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST", "PATIENT", "BILLING"]; 
+  
+ export default function LoginPage() { 
+   const router = useRouter();
+   const [email, setEmail] = useState(""); 
+   const [password, setPassword] = useState(""); 
+   const [role, setRole] = useState(""); 
+  
+   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     if (!role) {
+       alert("Please select a role to continue.");
+       return;
+     }
+     // Since we are not using a backend, we'll just redirect based on the role
+     localStorage.setItem("role", role);
+     const dashboardPath = "/dashboard";
+     router.push(dashboardPath);
+   };
+  
+   return (
     <div className="relative min-h-screen flex items-center justify-center px-6">
       {/* Background image */}
       <div
@@ -39,7 +53,7 @@ export default function LoginPage() {
         </div>
 
         {/* Form */}
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <Input
             label="Email"
             type="email"

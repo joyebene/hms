@@ -2,9 +2,10 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Button from "@/components/shared/button";
+import Modal from "@/components/shared/modal";
 import {
     CreditCardIcon,
-    PlusIcon,
+    DocumentPlusIcon,
     EyeIcon,
     ArrowDownTrayIcon,
     CheckCircleIcon,
@@ -66,6 +67,7 @@ const dummyInvoices: Invoice[] = [
 
 export default function BillingPage() {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         // For now, use dummy data
@@ -102,8 +104,8 @@ export default function BillingPage() {
                     </p>
                 </div>
                 <div className="flex-1 flex justify-end items-center w-full">
-                    <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5">
-                        <PlusIcon className="w-5 h-5" />
+                    <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5" onClick={() => setIsModalOpen(true)}>
+                        <DocumentPlusIcon className="w-5 h-5" />
                         Create New Invoice
                     </Button>
                 </div>
@@ -224,8 +226,63 @@ export default function BillingPage() {
 
             {/* Footer note */}
             <p className="text-center text-xs text-gray-400 mt-8">
-                All amounts in Nigerian Naira (₦). Last updated: March 02, 2025
+                All amounts in Nigerian Naira (₦). Last updated: March 02, 2026
             </p>
+
+                        {/* Create Invoice Modal */}
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Create New Invoice"
+            >
+                <form>
+                    <div className="space-y-4">
+                        <div>
+                            <label htmlFor="patientName" className="block text-sm font-medium text-gray-700">Patient Name</label>
+                            <input
+                                type="text"
+                                id="patientName"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="service" className="block text-sm font-medium text-gray-700">Service Description</label>
+                            <input
+                                type="text"
+                                id="service"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount (₦)</label>
+                            <input
+                                type="number"
+                                id="amount"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
+                            <select
+                                id="status"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            >
+                                <option>Pending</option>
+                                <option>Paid</option>
+                                <option>Overdue</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="mt-6 flex justify-end space-x-3">
+                        <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-gray-200 text-gray-700 hover:bg-gray-300">
+                            Cancel
+                        </Button>
+                        <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-700">
+                            Save Invoice
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
         </DashboardLayout>
     );
 }

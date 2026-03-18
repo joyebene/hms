@@ -2,6 +2,7 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Button from "@/components/shared/button";
+import Modal from "@/components/shared/modal";
 import { UserPlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
@@ -41,6 +42,7 @@ const dummyDoctors: Doctor[] = [
 
 export default function DoctorsPage() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
   useEffect(() => {
     // Temporary dummy data
@@ -67,7 +69,11 @@ export default function DoctorsPage() {
         </div>
 
         <div className="flex-1 flex justify-end items-center w-full">
-          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5">
+          <Button
+            onClick={() => setIsModalOpen(true)} // Open modal on click
+            size="sm"
+            className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5"
+          >
             <UserPlusIcon className="w-5 h-5" />
             Add Doctor
           </Button>
@@ -147,6 +153,50 @@ export default function DoctorsPage() {
           </table>
         </div>
       </div>
+
+      {/* Add Doctor Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Add New Doctor"
+      >
+        <form>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                type="text"
+                id="name"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="specialty" className="block text-sm font-medium text-gray-700">Specialty</label>
+              <input
+                type="text"
+                id="specialty"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                type="email"
+                id="email"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+          <div className="mt-6 flex justify-end space-x-3">
+            <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-gray-200 text-gray-700 hover:bg-gray-300">
+              Cancel
+            </Button>
+            <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-700">
+              Save Doctor
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </DashboardLayout>
   );
 }

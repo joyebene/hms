@@ -2,6 +2,7 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Button from "@/components/shared/button";
+import Modal from "@/components/shared/modal";
 import { UserPlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
@@ -48,6 +49,7 @@ const dummyNurses: Nurse[] = [
 
 export default function NursesPage() {
   const [nurses, setNurses] = useState<Nurse[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // For now, use dummy data
@@ -69,7 +71,7 @@ export default function NursesPage() {
           <p className="text-sm sm:text-base text-gray-500 sm:mt-2">Manage hospital nurses, assign shifts, and view details.</p>
         </div>
         <div className="flex-1 flex justify-end items-center w-full">
-          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5">
+          <Button size="sm" className="flex items-center gap-2 w-fit sm:px-8 sm:py-3.5" onClick={() => setIsModalOpen(true)}>
             <UserPlusIcon className="w-5 h-5" />
             Add Nurse
           </Button>
@@ -121,6 +123,49 @@ export default function NursesPage() {
           </table>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Add New Nurse"
+      >
+        <form>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                type="text"
+                id="name"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="department" className="block text-sm font-medium text-gray-700">Department</label>
+              <input
+                type="text"
+                id="department"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                type="email"
+                id="email"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+          <div className="mt-6 flex justify-end space-x-3">
+            <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-gray-200 text-gray-700 hover:bg-gray-300">
+              Cancel
+            </Button>
+            <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-700">
+              Save Nurse
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </DashboardLayout>
   );
 }
