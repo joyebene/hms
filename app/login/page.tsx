@@ -27,7 +27,7 @@ import { useRouter } from "next/navigation";
    };
   
    return (
-    <div className="relative min-h-screen flex items-center justify-center px-6">
+    <div className="relative min-h-screen flex items-center justify-center px-6 text-[#111111]">
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"

@@ -52,7 +52,7 @@ export default function Input({
             w-full px-5 py-3 rounded-xl border border-gray-200 
             bg-white text-base placeholder:text-gray-400
             focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600
-            disabled:bg-gray-100 disabled:cursor-not-allowed
+            disabled:bg-gray-100 disabled:cursor-not-allowed text-[#111111]
             transition-all
             ${className}
           `}
