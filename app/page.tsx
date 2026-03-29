@@ -60,7 +60,7 @@ export default function Home() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-300 py-8">
+          <div className="md:hidden bg-white border-t border-gray-300 py-8 text-[#111111]">
             <div className="flex flex-col items-center gap-8 text-lg">
               <Link href="#services" onClick={() => setIsMenuOpen(false)} className="hover:text-indigo-600">Services</Link>
               <Link href="#doctors" onClick={() => setIsMenuOpen(false)} className="hover:text-indigo-600">Doctors</Link>
@@ -204,7 +204,7 @@ export default function Home() {
                     className="object-cover rounded-xl"
                   />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-semibold">{item.title}</h3>
+                <h3 className="text-2xl md:text-3xl font-semibold text-[#111111]">{item.title}</h3>
                 <p className="text-sm md:text-base mt-4 text-gray-600 leading-relaxed">{item.desc}</p>
               </div>
             ))}
