@@ -87,9 +87,6 @@ import { useRouter } from "next/navigation";
               <input type="checkbox" className="rounded border-gray-300" />
               Remember me
             </label>
-            <a href="#" className="text-indigo-600 hover:underline">
-              Forgot password?
-            </a>
           </div>
 
           <Button type="submit" className="w-full">
